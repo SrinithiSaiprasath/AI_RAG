@@ -78,6 +78,19 @@ AWS_REGION=us-east-1
 S3_BUCKET_NAME=your_bucket_name
 BEDROCK_MODEL_ID=anthropic.claude-v2
 ```
+---
+
+## Docker Setup
+
+### 1. Build the Docker image
+
+```
+
+docker build -t ai_rag_app .
+docker run -d -p 8501:8501 --name ai_rag_container ai_rag_app
+docker stop ai_rag_container
+docker rm ai_rag_container
+```
 
 ---
 
