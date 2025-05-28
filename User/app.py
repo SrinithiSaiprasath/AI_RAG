@@ -7,8 +7,8 @@ dotenv.load_dotenv()
 
 ## s3_client
 s3_client = boto3.client("s3")
-BUCKET_NAME = os.getenv("BUCKET_NAME", "admin-chatpdf")
-AWS_REGION = os.getenv("AWS_REGION", "eu-north-1")
+BUCKET_NAME = os.getenv("BUCKET_NAME")
+AWS_REGION = os.getenv("AWS_REGION")
 
 ## Bedrock
 # from langchain_community.embeddings import BedrockEmbeddings
@@ -44,7 +44,7 @@ def load_index():
 
 def get_llm():
     llm = BedrockLLM(
-        model_id="mistral.mixtral-8x7b-instruct-v0:1",  # ✅ valid model ID
+        model_id="",  # ✅ valid model ID
         client=bedrock_client,
         model_kwargs={'max_tokens': 512}
     )
@@ -73,7 +73,7 @@ def get_response(llm,vectorstore, question ):
     llm=llm,
     chain_type="stuff",
     retriever=vectorstore.as_retriever(
-        search_type="mmr", search_kwargs={"k": 5 , "lambda_mult": 0.5}
+        search_type="mmr", search_kwargs={"k": 5 , "lambda_mult": 0.5} # keep search_type as similarity search if required
     ),
     return_source_documents=True,
     chain_type_kwargs={"prompt": PROMPT}
